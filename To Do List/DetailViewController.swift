@@ -17,6 +17,8 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        toDoField.text = toDoItem
     }
 
     override func didReceiveMemoryWarning() {
@@ -33,6 +35,15 @@ class DetailViewController: UIViewController {
 
     @IBAction func cancelPressed(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
+        
+        let isPresentingInAddMode = presentingViewController is
+        UINavigationController
+        if isPresentingInAddMode {
+            dismiss(animated: true, completion: nil)
+            
+        }else {
+            navigationController!.popViewController(animated: true)
+        }
     }
 }
 
