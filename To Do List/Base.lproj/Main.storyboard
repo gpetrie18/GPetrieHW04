@@ -57,6 +57,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="addBarButton" destination="FPn-Uo-nZT" id="sPd-2G-ReA"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dbt-ou-EAX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

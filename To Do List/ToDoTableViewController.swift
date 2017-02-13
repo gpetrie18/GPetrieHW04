@@ -16,6 +16,7 @@ class ToDoTableViewController: UITableViewController {
     
     var defaultsData = UserDefaults.standard
     
+    @IBOutlet weak var addBarButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,21 +97,43 @@ class ToDoTableViewController: UITableViewController {
     }
  
 
-    /*
+    
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
 
+        let itemToMove = toDoArray[fromIndexPath.row]
+        let noteToMove = toDoNotes[fromIndexPath.row]
+        
+        toDoArray.remove(at: fromIndexPath.row)
+        toDoNotes.remove(at: fromIndexPath.row)
+        
+        toDoArray.insert(itemToMove, at: to.row)
+        toDoNotes.insert(noteToMove, at: to.row)
+        
+        defaultsData.set(toDoArray, forKey: "toDoArray")
+        defaultsData.set(toDoNotes, forKey: "toDoNotes")
+        
     }
-    */
+ 
 
-    /*
+    
     // Override to support conditional rearranging of the table view.
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the item to be re-orderable.
         return true
     }
-    */
+ 
 
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        
+        if (editing) {
+            addBarButton.isEnabled = false
+        } else {
+            addBarButton.isEnabled = true
+        }
+    }
     
     // MARK: - Navigation
 
