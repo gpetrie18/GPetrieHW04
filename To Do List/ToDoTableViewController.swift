@@ -10,15 +10,12 @@ import UIKit
 
 class ToDoTableViewController: UITableViewController {
     
-    var toDoArray = ["Learn Swift",
-                     "Build Apps",
-                     "Change the World!",
-                     "Pick Up Groceries"]
+    var toDoArray = [String]()
     
-    var toDoNotes = ["So I Can Build Awesome Apps",
-                     "",
-                     "By Building Apps for Good",
-                     "Hamburger Buns, Beef, Leafy Greens, Kale"]
+    var toDoNotes = [String]()
+    
+    var defaultsData = UserDefaults.standard
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +25,20 @@ class ToDoTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.leftBarButtonItem = self.editButtonItem
+        
+        
+        
+        toDoArray = defaultsData.stringArray(forKey: "toDoArray") ?? [String]()
+        toDoNotes = defaultsData.stringArray(forKey: "toDoNotes") ?? [String] ()
+        
+        // If one array is count size 0 set the other one to an empty array as well
+        if toDoArray.count == 0 {
+            toDoNotes = [String]()
+        }
+        if toDoNotes.count == 0 {
+            toDoArray = [String]()
+        }
+    
     }
 
     override func didReceiveMemoryWarning() {
@@ -79,7 +90,9 @@ class ToDoTableViewController: UITableViewController {
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
+        defaultsData.set(toDoArray, forKey: "toDoArray")
+        defaultsData.set(toDoNotes, forKey: "toDoNotes")
     }
  
 
@@ -151,6 +164,10 @@ class ToDoTableViewController: UITableViewController {
                 
                 tableView.insertRows(at: [newIndexPath], with: .bottom)
             }
+            
+            defaultsData.set(toDoArray, forKey: "toDoArray")
+            defaultsData.set(toDoNotes, forKey: "toDoNotes")
+            
         }
     }
 
